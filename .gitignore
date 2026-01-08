@@ -1,0 +1,75 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Pip
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# =========================
+# Whisper / ML artifacts
+# =========================
+# Downloaded models (Whisper / faster-whisper)
+models/
+*.pt
+*.bin
+*.onnx
+
+# Cache (torch / huggingface)
+.cache/
+torch_cache/
+hf_cache/
+
+# =========================
+# Audio / Transcription outputs
+# =========================
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.ogg
+
+# Generated transcripts
+*.txt
+*.vtt
+*.srt
+*.json
+
+# =========================
+# Logs & temp files
+# =========================
+*.log
+tmp/
+temp/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# OS / Editor
+# =========================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+
+
