@@ -39,4 +39,4 @@ print(f"Saved transcript to {output_path}")
 
 end_time = datetime.now
 print(end_time)
-print(f"Diff: {end_time - start_time}")
+#print(f"Diff: {end_time - start_time}")
