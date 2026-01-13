@@ -7,10 +7,11 @@ from tkinterdnd2 import DND_FILES, TkinterDnD
 
 from faster_whisper import WhisperModel
 
+temp_s = os.path.join("models", "faster-whisper-base")
 
 # ---- Load Whisper model once ----
 model = WhisperModel(
-    "large-v3",          
+    "base",          
     device="cpu",
     compute_type="int8"
 )
