@@ -1,0 +1,13 @@
+Implementing using model locally
+
+Transcribing multiple fies into one file
+
+Being able to change the currently used model
+
+-------If time--------
+
+Doing multiple transcriptions at once (queue)
+
+Transcribing videos with ffmpeg
+
+json file to store stuff maybe
