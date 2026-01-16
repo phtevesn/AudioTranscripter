@@ -20,7 +20,6 @@ from text.filetype_service import (
 )
 
 model = None 
-#--Create Obj--
 app = TkinterDnD.Tk()
 app.title("KW Transcribe")
 app.geometry("520x290")
@@ -37,7 +36,6 @@ def on_submit():
 
     loading_frame.pack(fill="x", padx=12, pady=12)
     progress.start(10)
-
     def worker():
         try:
             model = load_model(selected_size, HW, C_TYPE)
@@ -73,19 +71,25 @@ def on_click_label(event=None):
             ("All files", "*.*"),
         ],
     )
-    status.set(file_path)
-    in_file_path.set(file_path)
+    if file_path:
+        status.set(file_path)
+        in_file_path.set(file_path)
 
 def on_drop(event):
-    file_path = event.data
+    dropped_files = event.data
 
     # If multiple files are dropped, take the first one (simple handling)
     # TkDnD often formats this like: "{file1} {file2}"
-    if file_path.startswith("{") and "} " in file_path:
-        file_path = file_path.split("} ")[0] + "}"
+
+    files = dropped_files.split(" ")
+    file_path = files[0]
     
-    status.set(file_path)
-    in_file_path.set(file_path)
+    print(file_path)
+    if not valid_filetype(file_path):
+        status.set("Invalid file type \n Select OR Drag & drop an audio file here")
+    else:
+        status.set(file_path)
+        in_file_path.set(file_path)
 
 def start_transcription():
     model = app.model
@@ -159,6 +163,7 @@ submit_btn = Button(options_frame, text="Generate Transcription Model",
                     command=on_submit)
 submit_btn.pack(pady=(12,0))
 
+
 loading_frame = Frame(app)
 loading_label= Label(loading_frame, text="Loading model...")
 loading_label.pack(pady=(12,6))
@@ -166,10 +171,16 @@ progress = Progressbar(loading_frame, mode="indeterminate")
 progress.pack(fill="x", padx=12)
 
 home_frame = Frame(app)
+model_row = Frame(home_frame)
+model_row.pack(padx=2, pady=(1, 1), anchor='w')
+model_colon = Label(model_row, text="Current model size: ")
+model_colon.pack(side="left", anchor='w')
+model_label = Label(model_row, textvariable=model_size)
+model_label.pack(padx=2, side="right", anchor='w')
 status = StringVar(value="Select OR Drag & drop an audio file here")
 save_dir = StringVar(value="") 
 btn = Button(home_frame, text="Choose New Save Folder", command=choose_folder)
-btn.pack(pady=(15, 5))
+btn.pack(pady=(2,0))
 save_label = Label(home_frame, textvariable=save_dir, wraplength=480)
 save_label.pack(pady=(0, 10))
 
@@ -181,7 +192,7 @@ label = TkLabel(
     width=62,
     height=6
 )
-label.pack(padx=20, pady=(5, 10))
+label.pack(padx=20)
 label.bind("<Button-1>", on_click_label)
 label.configure(cursor="hand2") 
 label.drop_target_register(DND_FILES)

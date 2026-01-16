@@ -23,8 +23,10 @@ def create_out_file_path(file_path: str, new_out_dir:str, out_filetype: str):
         out_dir = new_out_dir
 
     out_path = os.path.join(out_dir, base_name+out_filetype)
+    '''
     if os.path.exists(out_path):
         return None
+    '''
     return out_path
     
 def to_txt(segments, output_file: str):
