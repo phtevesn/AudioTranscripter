@@ -24,3 +24,6 @@ SUPPORTED_EXTS = (".wav", ".mp3", ".m4a", ".flac")
 
 HW ="cpu"
 C_TYPE = "int8"
+
+MIN_FONT = 10
+MAX_FONT = 32

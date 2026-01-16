@@ -6,7 +6,9 @@
 
 -------If time--------
 
-Doing multiple transcriptions at once (queue)
+X Doing multiple transcriptions at once (queue)
+
+Changing font size
 
 Transcribing videos with ffmpeg
 

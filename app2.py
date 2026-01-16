@@ -1,7 +1,7 @@
 
 import os
 import threading
-from tkinter import Label as TkLabel, StringVar, Button as TkButton
+from tkinter import Label as TkLabel, StringVar, Button as TkButton, font
 from tkinter import filedialog
 from tkinter.ttk import (
     Progressbar, Button, Label, Radiobutton, Frame,
@@ -11,7 +11,10 @@ from tkinterdnd2 import DND_FILES, TkinterDnD
 
 from faster_whisper import WhisperModel
 
-from spot import MODEL_SIZES, C_TYPE, HW, FILETYPES
+from spot import (
+    MODEL_SIZES, C_TYPE, HW, FILETYPES,
+    MIN_FONT, MAX_FONT
+)
 from text.whisper_service import load_model, transcribe
 from text.filetype_service import (
     valid_filetype, 
@@ -22,10 +25,12 @@ from text.filetype_service import (
 model = None 
 app = TkinterDnD.Tk()
 app.title("KW Transcribe")
-app.geometry("520x290")
+app.geometry("1040x580")
 app.model = None
 app.files = None
-
+app.size = 14
+default_font = font.nametofont("TkDefaultFont")
+default_font.configure(size = app.size)
 #--Handlers--
 def on_submit():
     selected_size = model_size.get()
@@ -55,6 +60,17 @@ def on_submit():
         home_frame.pack(fill="x", padx=12, pady=12)
 
     threading.Thread(target=worker, daemon=True).start()
+
+def lower_font_size():
+    if app.size > MIN_FONT:
+        app.size-=2
+        default_font.configure(size = app.size)
+    
+def raise_font_size():
+    if app.size < MAX_FONT:
+        app.size+=2
+        default_font.configure(size = app.size)
+
 
 def choose_folder():
     folder = filedialog.askdirectory()
@@ -165,7 +181,7 @@ progress.pack(fill="x", padx=12)
 home_frame = Frame(app)
 
 model_row = Frame(home_frame)
-model_row.pack(padx=2, pady=(1, 1), anchor='w')
+model_row.pack(padx=2, pady=(1, 1), anchor='w', fill='x')
 model_button = TkButton(  
     model_row,
     text="...",
@@ -177,7 +193,13 @@ model_button.pack(padx=(0,2), side="left", anchor='w')
 model_colon = Label(model_row, text="Current model size: ")
 model_colon.pack(side="left", anchor='w')
 model_label = Label(model_row, textvariable=model_size)
-model_label.pack(padx=2, side="right", anchor='w')
+model_label.pack(padx=2, side="left", anchor='w')
+font_size_label = Label(model_row, text="Font Size: ")
+font_size_down = TkButton(model_row, text="-", command=lower_font_size)
+font_size_up = TkButton(model_row, text="+", command=raise_font_size)
+font_size_down.pack(padx=1,side="right", anchor='e')
+font_size_up.pack(padx=1, side="right", anchor='e')
+font_size_label.pack(padx=1, side="right", anchor='e')
 
 
 status = StringVar(value="Select OR Drag & drop an audio files here")
