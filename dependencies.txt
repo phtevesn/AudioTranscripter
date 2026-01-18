@@ -1,0 +1,5 @@
+faster-whisper
+tkinterdnd2
+reportlab
+python-docx
+huggingface_hub
