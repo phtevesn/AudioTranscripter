@@ -31,6 +31,7 @@ app.files = None
 app.size = 14
 default_font = font.nametofont("TkDefaultFont")
 default_font.configure(size = app.size)
+app.iconbitmap("kwlogo.ico")
 #--Handlers--
 def on_submit():
     selected_size = model_size.get()
@@ -195,12 +196,12 @@ model_colon = Label(model_row, text="Current model size: ")
 model_colon.pack(side="left", anchor='w')
 model_label = Label(model_row, textvariable=model_size)
 model_label.pack(padx=2, side="left", anchor='w')
-font_size_label = Label(model_row, text="Font Size: ")
+
 font_size_down = TkButton(model_row, text="-", command=lower_font_size)
 font_size_up = TkButton(model_row, text="+", command=raise_font_size)
 font_size_down.pack(padx=1,side="right", anchor='e')
 font_size_up.pack(padx=1, side="right", anchor='e')
-font_size_label.pack(padx=1, side="right", anchor='e')
+
 
 
 status = StringVar(value="Select OR Drag & drop an audio files here")
